@@ -19,7 +19,7 @@ class NormalCamera():
         os.system(f"libcamera-jpeg -o {full_path}")
 
         # Get image array
-        image = Image.open(full_path).resize(self.img_size).convert('L')
+        image = Image.open(full_path).convert('RGB').resize(self.img_size)
         image_array = [ [ image.getpixel((r,c)) for c in range(image.size[1]) ] for r in range(image.size[0]) ]
 
         # Delete image
