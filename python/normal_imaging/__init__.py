@@ -1,4 +1,5 @@
 import os
+import subprocess
 from datetime import datetime
 from PIL import Image
 
@@ -15,6 +16,11 @@ class NormalCamera():
          
         # Save image
         os.system(f"libcamera-jpeg -o ${full_path}")
+        exit()
+        
+        output = subprocess.check_output("ls", shell=True)
+        print(output)
+        exit()
 
         # Get image array
         image = Image.open(full_path).convert('L')
