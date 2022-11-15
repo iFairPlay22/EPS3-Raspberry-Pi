@@ -1,24 +1,10 @@
-from imaging.thermal import ThermalCamera
-from imaging.normal import NormalCamera
+from python.thermal_imaging import ThermalCamera
+from python.normal_imaging import NormalCamera
+from python.util import createFolderIfNotExists, readJsonFile, saveJsonFile
 import os
-import json
 from flask import Flask
 app = Flask(__name__)
 
-def createFolderIfNotExists(path: str):
-    if not os.path.exists(path):
-        os.makedirs(path)
-        
-def readJsonFile(path: str):
-    with open(path, "r") as infile:
-        return json.load(infile)
-    
-def saveJsonFile(path: str, object: object):
-    
-    json_object = json.dumps(object, indent=4)
-    with open(path, "w") as outfile:
-        outfile.write(json_object)
- 
 @app.route('/')
 def home():
     return "Connected!"
@@ -43,11 +29,13 @@ if __name__ == '__main__':
     STORAGE_FOLDER      = "storage"
     STORAGE_FILE        = "data.json"
     STORAGE_FULL_PATH   = os.path.join(STORAGE_FOLDER, STORAGE_FILE)
-    
-    NORMAL_CAMERA  = NormalCamera()
-    THERMAL_CAMERA = ThermalCamera() 
-    
     createFolderIfNotExists(STORAGE_FOLDER)
     saveJsonFile(STORAGE_FULL_PATH, { "images": [] })
+    
+    TMP_FOLDER = "tmp"
+    createFolderIfNotExists(TMP_FOLDER)
+    
+    NORMAL_CAMERA  = NormalCamera(TMP_FOLDER)
+    THERMAL_CAMERA = ThermalCamera() 
     
     app.run(host="0.0.0.0")
