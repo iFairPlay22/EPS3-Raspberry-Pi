@@ -4,7 +4,7 @@ import adafruit_mlx90640
 
 class ThermalCamera():
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.i2c = busio.I2C(board.SCL, board.SDA, frequency=800000)
         self.mlx = adafruit_mlx90640.MLX90640(self.i2c)
         self.mlx.refresh_rate = adafruit_mlx90640.RefreshRate.REFRESH_2_HZ

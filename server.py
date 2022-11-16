@@ -1,5 +1,6 @@
 from python.thermal_imaging import ThermalCamera
 from python.normal_imaging import NormalCamera
+from python.obstacle_avoidance import DistanceDetector
 from python.util import createFolderIfNotExists, readJsonFile, saveJsonFile
 import os
 from flask import Flask
@@ -24,6 +25,10 @@ def take_pictures():
     return data_to_add
     return "done"
     
+@app.route('/detect-obstacles')
+def detect_obstacles():
+    return DISTANCE_DETECTOR.get()
+    
 if __name__ == '__main__':
     
     STORAGE_FOLDER      = "storage"
@@ -35,7 +40,8 @@ if __name__ == '__main__':
     TMP_FOLDER = "tmp"
     createFolderIfNotExists(TMP_FOLDER)
     
-    NORMAL_CAMERA  = NormalCamera(TMP_FOLDER)
-    THERMAL_CAMERA = ThermalCamera() 
+    NORMAL_CAMERA     = NormalCamera(TMP_FOLDER)
+    THERMAL_CAMERA    = ThermalCamera() 
+    DISTANCE_DETECTOR = DistanceDetector()
     
     app.run(host="0.0.0.0")

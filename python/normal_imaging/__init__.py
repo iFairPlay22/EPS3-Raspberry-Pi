@@ -5,7 +5,7 @@ from PIL import Image
 
 class NormalCamera():
 
-    def __init__(self, tmp_folder) -> None:
+    def __init__(self, tmp_folder):
         self.tmp_folder = tmp_folder
         self.img_size = (4056//4, 3040//4)
         
