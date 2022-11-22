@@ -25,6 +25,7 @@ class DroneHealth():
         return self.battery
 
     def getStatus(self):
+        # return 1 if mission successed, 2 if drone is charging and 3 if drone is flying
         if self.launch_mission:
             if time.time() - self.start_timer > 20:
                 self.launch_mission = False
