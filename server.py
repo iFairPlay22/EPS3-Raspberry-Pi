@@ -53,6 +53,11 @@ def getAltitude():
 
 @app.route('/launch-mission')
 def launchMission():
+    json_data = readJsonFile(STORAGE_FULL_PATH)
+
+    if (len(json_data["images"]) > 0):
+        return "Error old images need to be download", 500
+
     DRONE_HEALTH.launch()
     return '', 200
 
